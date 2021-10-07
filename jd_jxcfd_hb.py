@@ -29,23 +29,24 @@ def ExchangePearlHb(purl, bodys, header, ddwVirHb, dwLvl, strPoolName):
     r = requests.get(url=url, headers=header).text
     data = json.loads(r)
     print(data)
+    print()
 
 def start():
-    global cookiesList, pinNameList, ckNum
-    print()
     print('    ******* 财富岛-合成珍珠红包-兑换 *******')
+    print()
     cookiesList, pinNameList = jdCookie.start()
     for ckname in jdCookie.Name():
         try:
             ckNum = pinNameList.index(ckname)
         except:
             print(f"请检查被助力账号【{ckname}】名称是否正确？提示：助力名字可填pt_pin的值、也可以填账号名。")
+            print()
             continue
-        print()
         print(f"*******开始【京东账号】{pinNameList[int(ckNum)]} *******")
         print()
         if strPrizeName not in [0.2, 1, 2, 5, 10, 100]:
             print('请输入正确兑换的红包金额...')
+            print()
             exit()
         purl, body = posturl.jd_jxcfd()
         ddwVirHb, dwLvl, strPool = ExchangePearlState(purl, body, HEADERS.jd_jxcfd(cookiesList[ckNum]))

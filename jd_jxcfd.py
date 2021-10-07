@@ -25,7 +25,7 @@ def getShareCode(purl, bodys, header):
             print()
             return 0
 
-def helpCode(purl, bodys, header, strMyShareId, uNUm, user, name):
+def helpCode(purl, bodys, header, strMyShareId, uNUm, user):
     print(f'====用户{uNUm} {user} 助力====')
     print()
     try:
@@ -78,7 +78,7 @@ def start():
             if i == cookiesList[ckNum]:
                 u += 1
                 continue
-            iRet = helpCode(purl, body, HEADERS.jd_jxcfd(i), strMyShareId, u+1, pinNameList[u], pinNameList[ckNum])
+            iRet = helpCode(purl, body, HEADERS.jd_jxcfd(i), strMyShareId, u+1, pinNameList[u])
             print()
             if iRet == 2190:
                 break

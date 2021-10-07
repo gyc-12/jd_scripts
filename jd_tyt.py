@@ -48,7 +48,7 @@ def getShareCode(purl, bodys1, bodys2, header):
             print()
             return 0
 
-def helpCode(purl, bodys1, bodys2, header, packetId, uNUm, user, name):
+def helpCode(purl, bodys1, bodys2, header, packetId, uNUm, user):
     print(f'====用户{uNUm} {user} 助力====')
     print()
     try:
@@ -94,7 +94,7 @@ def start():
             continue
         u = 0
         for i in cookiesList:
-            code = helpCode(purl, body1, body2, HEADERS.jd_tyt(i), packetId, u+1, pinNameList[u], pinNameList[ckNum])
+            code = helpCode(purl, body1, body2, HEADERS.jd_tyt(i), packetId, u+1, pinNameList[u])
             if code == 703:
                 break
             time.sleep(10)

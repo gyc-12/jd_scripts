@@ -25,6 +25,15 @@ def jd_jx88hb(ck):
     }
     return headers
 
+def jd_jxfhb(ck):
+    headers = {
+        "Referer": "https://actst.jingxi.com/sns/201907/25/rebate/index.html",
+        "Host": "m.jingxi.com",
+        "User-Agent": "jdpingou" + USER_AGENTS.userAgent(),
+        "Cookie": ck,
+    }
+    return headers
+
 def jd_fcdyj(ck):
     headers = {
         "Origin": "https://618redpacket.jd.com",

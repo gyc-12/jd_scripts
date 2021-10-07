@@ -32,7 +32,7 @@ def getShareCode(purl, bodys1, bodys2, header):
             print()
             return 0, 0
 
-def helpCode(purl, bodys1, bodys2, header, redEnvelopeId, inviter, uNUm, user, name):
+def helpCode(purl, bodys1, bodys2, header, redEnvelopeId, inviter, uNUm, user):
     print(f'====用户{uNUm} {user} 助力====')
     print()
     try:
@@ -100,7 +100,7 @@ def start(ck):
             if i == cookiesList[ckNum]:
                 u += 1
                 continue
-            code = helpCode(purl, body1, body2, HEADERS.jd_fcdyj(i), redEnvelopeId, markedPin, u+1, pinNameList[u], pinNameList[ckNum])
+            code = helpCode(purl, body1, body2, HEADERS.jd_fcdyj(i), redEnvelopeId, markedPin, u+1, pinNameList[u])
             print()
             if code == 16005:
                 exchange(purl, body1, body2, HEADERS.jd_fcdyj(cookiesList[ckNum]))

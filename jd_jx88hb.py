@@ -30,9 +30,14 @@ def getShareCode(purl, bodys, header):
         print()
         return strUserPin
     except Exception as e:
-        print("获取互助码失败！", e)
-        print()
-        return 0
+        if aNum < 5:
+            aNum += 1
+            return getShareCode(purl, bodys, header)
+        else:
+            aNum = 0
+            print("获取互助码失败！", e)
+            print()
+            return 0
 
 def helpCode(purl, bodys, header, strPin, uNUm, user, name):
     print(f'====用户{uNUm} {user} 助力====')

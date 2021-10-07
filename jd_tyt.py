@@ -26,10 +26,9 @@ def getShareCode(purl, bodys1, bodys2, header):
             time.sleep(2)
             if r1['code'] == 0 and r1['msg'] == 'OK':
                 print('获得：再推一次')
-                print()
             else:
                 print("获取: 再推一次 失败！", e)
-                print()
+            print()
         elif r['code'] == 701:
             body2 = f'functionId=getCoinDozerInfo{bodys1}{bodys2}megatron'
             r2 = requests.post(url=purl, headers=header, data=body2).json()
@@ -40,41 +39,46 @@ def getShareCode(purl, bodys1, bodys2, header):
         else:
             return 703
     except Exception as e:
-        print("a获取互助码失败！", e)
-        print()
-        return 0
+        if aNum < 5:
+            aNum += 1
+            return getShareCode(purl, bodys1, bodys2, header)
+        else:
+            aNum = 0
+            print("获取互助码失败！", e)
+            print()
+            return 0
 
 def helpCode(purl, bodys1, bodys2, header, packetId, uNUm, user, name):
     print(f'====用户{uNUm} {user} 助力====')
+    print()
     try:
         body = f'functionId=helpCoinDozer{bodys1},"packetId":"{packetId}"{bodys2}station-soa-h5&_stk=appid,body,functionId&h5st='
         body += h5st.start(body, '10005')
         r = requests.post(url=purl, headers=header, data=body).json()
         code = r['code']
         if code == 0 and r['msg'] == 'OK':
-            print()
             print(r["msg"])
             print(f'帮砍：{r["data"]["amount"]}')
         else:
-            print()
             print(r["msg"])
+        print()
         return code
     except Exception as e:
-        print()
         print("helpCode Error", e)
         print('报错了！')
+        print()
 
 def start():
-    global cookiesList, pinNameList, ckNum
     print('          ******* 推一推-助力 *******')
+    print()
     cookiesList, pinNameList = jdCookie.start()
     for ckname in jdCookie.Name():
         try:
             ckNum = pinNameList.index(ckname)
         except:
             print(f"请检查被助力账号【{ckname}】名称是否正确？提示：助力名字可填pt_pin的值、也可以填账号名。")
+            print()
             continue
-        print()
         print(f"*******开始【京东账号】{pinNameList[int(ckNum)]} *******")
         print()
         purl, body1, body2 = posturl.jd_tyt()
@@ -86,15 +90,16 @@ def start():
             continue
         elif packetId == 703:
             print("已完成砍价")
+            print()
             continue
         u = 0
         for i in cookiesList:
             code = helpCode(purl, body1, body2, HEADERS.jd_tyt(i), packetId, u+1, pinNameList[u], pinNameList[ckNum])
             if code == 703:
                 break
-            print()
             time.sleep(10)
             u += 1
   
+aNum = 0
 if __name__ == '__main__':
     start()

@@ -8,7 +8,6 @@ Author: SheYu09
 import jdCookie, HEADERS, posturl, requests, json, time
 
 def getShareCode(purl, bodys1, bodys2, header):
-    global aNum
     try:
         url = f'{purl}redEnvelopeInteractHome{bodys1}{bodys2}'
         r = requests.get(url=url, headers=header, timeout=30).text
@@ -78,8 +77,6 @@ def exchange(purl, bodys1, bodys2, header):
         print()
 
 def start(ck):
-    # global cookiesList, pinNameList, ckNum
-    ckNum = 0
     print('    ******* 发财大赢家-微信提现-助力 *******')
     print()
     cookiesList, pinNameList = jdCookie.start()
@@ -114,3 +111,5 @@ def start(ck):
                 break
             time.sleep(1)
             u += 1
+
+aNum = 0

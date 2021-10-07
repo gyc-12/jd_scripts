@@ -9,9 +9,7 @@ new Env('极速版 -*- 发财大赢家')
 '''
 import jdCookie, HEADERS, posturl, jd_fcdyj_wxtx, requests, json, time
 
-aNum = 0
 def getShareCode(purl, bodys1, bodys2, header):
-    global aNum
     try:
         url = f'{purl}openRedEnvelopeInteract{bodys1}{bodys2}'
         r = requests.get(url=url, headers=header, timeout=30).text
@@ -40,41 +38,40 @@ def getShareCode(purl, bodys1, bodys2, header):
 
 def helpCode(purl, bodys1, bodys2, header, redEnvelopeId, inviter, uNUm, user, name):
     print(f'====用户{uNUm} {user} 助力====')
+    print()
     try:
         url = f'{purl}openRedEnvelopeInteract{bodys1},"redEnvelopeId":"{redEnvelopeId}","inviter":"{inviter}","helpType":"1"{bodys2}'
         r = requests.get(url=url, headers=header, timeout=30).text
         data = json.loads(r)
         code = data["data"]["helpResult"]['code']
-        # print(data)
         if code == 0:
-            print()
             print(f'{data["data"]["helpResult"]["errMsg"]}')
             print(f'获得{data["data"]["helpResult"]["data"]["amount"]}红包')
         else:
             if code == 16018:
-                print()
                 print('你的好友今日还未获得奖励')
                 print('提现助力失败')
             else:
-                print()
                 print(f'{data["data"]["helpResult"]["errMsg"]}')
+        print()
         return code
     except Exception as e:
-        print()
         print("helpCode Error", e)
         print('报错了！')
+        print()
 
 def start():
     global cookiesList, pinNameList, ckNum
     print('    ******* 发财大赢家-拆红包-助力 *******')
+    print()
     cookiesList, pinNameList = jdCookie.start()
     for ckname in jdCookie.Name():
         try:
             ckNum = pinNameList.index(ckname)
         except:
             print(f"请检查被助力账号【{ckname}】名称是否正确？提示：助力名字可填pt_pin的值、也可以填账号名。")
+            print()
             continue
-        print()
         print(f"*******开始【京东账号】{pinNameList[int(ckNum)]} *******")
         print()
         purl, body1, body2 = posturl.jd_fcdyj()
@@ -98,10 +95,12 @@ def start():
                 u += 1
                 continue
             code = helpCode(purl, body1, body2, HEADERS.jd_fcdyj(i), redEnvelopeId, markedPin, u+1, pinNameList[u], pinNameList[ckNum])
-            print()
             time.sleep(0.1)
             u += 1
-        jd_fcdyj_wxtx.start(ckname)
-  
+            if code == 16005:
+                jd_fcdyj_wxtx.start(ckname)
+                break
+
+aNum = 0
 if __name__ == '__main__':
     start()

@@ -11,5 +11,7 @@ ShuYe09维护仓库，重建全网助力脚本，提出被偷的烦恼。
 
 
 0 5 1/1 * *
+
 更新【舍予集合助力仓库】
+
 ql repo https://ghproxy.com/https://github.com/SheYu09/jd_scripts.git "" "h5st|HEADERS|jdCookie|posturl|USER_AGENTS|jd_fcdyj_wxtx|jd_jxcfd_hb" "h5st|HEADERS|jdCookie|posturl|USER_AGENTS|jd_fcdyj_wxtx|jd_jxcfd_hb" "master"

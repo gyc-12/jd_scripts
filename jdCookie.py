@@ -11,7 +11,7 @@ url = ''
 client_id = ''
 client_secret = ''
 
-# 设置被助力的账号可填用户名 或 pin的值不要;
+# 设置被助力的账号: pt_pin的值;
 jd_Name = ['jd_***b3', 'jd_***2b', 'jd_***cL']
 
 def Name():

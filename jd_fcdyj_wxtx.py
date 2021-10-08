@@ -57,8 +57,8 @@ def helpCode(purl, bodys1, bodys2, header, redEnvelopeId, inviter, uNUm, user):
         print('报错了！')
         print()
 
-def exchange(purl, bodys1, bodys2, header):
-    print(f"****【京东账号】{pinNameList[int(ckNum)]} 开始提现 ****")
+def exchange(purl, bodys1, bodys2, header, name):
+    print(f"****【京东账号】{name} 开始提现 ****")
     print()
     try:
         url = f'{purl}exchange{bodys1},"rewardType":2{bodys2}'
@@ -103,7 +103,7 @@ def start(ck):
             code = helpCode(purl, body1, body2, HEADERS.jd_fcdyj(i), redEnvelopeId, markedPin, u+1, pinNameList[u])
             print()
             if code == 16005:
-                exchange(purl, body1, body2, HEADERS.jd_fcdyj(cookiesList[ckNum]))
+                exchange(purl, body1, body2, HEADERS.jd_fcdyj(cookiesList[ckNum]), pinNameList[int(ckNum)])
                 break
             elif code == 16011:
                 break

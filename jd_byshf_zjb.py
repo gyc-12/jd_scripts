@@ -7,7 +7,9 @@ Author: SheYu09
 cron: 5 0 * * * jd_byshf_zjb.py
 new Env('极速版 -*- 赚金币')
 '''
-import jdCookie, HEADERS, posturl, requests, json, time
+import requests, json, time, sys
+sys.path.append('../repo/SheYu09_jd_scripts_master/')
+import jdCookie, HEADERS, posturl
 
 def getShareCode(purl, bodys1, bodys2, bodys3, header):
     try:

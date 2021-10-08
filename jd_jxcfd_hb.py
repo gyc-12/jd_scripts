@@ -5,7 +5,9 @@
 活动名称: 财富岛-合成珍珠红包-兑换
 Author: SheYu09
 '''
-import jdCookie, HEADERS, h5st, posturl, requests, json
+import requests, json, sys
+sys.path.append('../repo/SheYu09_jd_scripts_master/')
+import jdCookie, HEADERS, h5st, posturl
 
 # 兑换红包金额
 strPrizeName = 10

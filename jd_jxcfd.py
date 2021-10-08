@@ -7,7 +7,9 @@ Author: SheYu09
 cron: 0 0 * * * jd_jxcfd.py
 new Env('京喜 -*- 财富岛红包')
 '''
-import jdCookie, HEADERS, h5st, posturl, jd_jxcfd_hb, requests, json, time
+import requests, json, time, sys
+sys.path.append('../repo/SheYu09_jd_scripts_master/')
+import jdCookie, HEADERS, h5st, posturl, jd_jxcfd_hb
 
 def getShareCode(purl, bodys, header):
     try:

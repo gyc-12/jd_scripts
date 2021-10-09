@@ -12,6 +12,7 @@ sys.path.append('../repo/SheYu09_jd_scripts_master/')
 import jdCookie, HEADERS, h5st, posturl, jd_jxcfd_hb
 
 def getShareCode(purl, bodys, header):
+    global aNum
     try:
         url = f'{purl}user/ComposePearlState{bodys}'
         r = requests.get(url=url, headers=header).text

@@ -7,11 +7,21 @@ Author: SheYu09
 cron: 0 10 1/1 * * jd_jxfhb.py
 new Env('京喜 -*- 订单返红包')
 '''
-import requests, json, time, sys
-sys.path.append('../repo/SheYu09_jd_scripts_master/')
-import jdCookie, HEADERS, h5st, posturl
+import jdCookie, HEADERS, h5st, posturl, requests, json, time
 
-def getShareCode(purl, bodys, header):
+def Orderid():
+    if len(os.environ["orderid"]) > 0:
+        orderid = os.environ["orderid"]
+        if '&' in orderid:
+            orderid = orderid.replace('[', '').replace(']', '').replace('\'', '').replace(' ', '').split('&')
+        print("已获取并使用Env环境 orderid:", orderid)
+        return orderid
+    else:
+        print("自行添加环境变量：orderid, 助力的账号: pt_pin的值和订单号, 中间用&符号隔开")
+        exit()
+
+def getShareCode(purl, bodys, header, orderid):
+    global aNum
     try:
         url = f'{purl}QueryGroupDetail?orderid={orderid}{bodys}'
         r = requests.get(url=url, headers=header).text
@@ -36,14 +46,14 @@ def getShareCode(purl, bodys, header):
     except Exception as e:
         if aNum < 5:
             aNum += 1
-            return getShareCode(purl, bodys, header)
+            return getShareCode(purl, bodys, header, orderid)
         else:
             aNum = 0
             print("获取互助码失败！", e)
             print()
             return 0
 
-def helpCode(purl, bodys, header, strPin, uNUm, user):
+def helpCode(purl, bodys, header, groupid, uNUm, user):
     print(f'====用户{uNUm} {user} 助力====')
     print()
     try:
@@ -66,8 +76,9 @@ def helpCode(purl, bodys, header, strPin, uNUm, user):
 def start():
     print('    ******* 订单返红包-助力 *******')
     print()
+    orderid = Orderid()
     cookiesList, pinNameList = jdCookie.start()
-    for ckname in jdCookie.Name():
+    for ckname in orderid[0]:
         try:
             ckNum = pinNameList.index(ckname)
         except:
@@ -77,7 +88,7 @@ def start():
         print(f"*******开始【京东账号】{pinNameList[int(ckNum)]} *******")
         print()
         purl, body = posturl.jd_jxfhb()
-        groupid = getShareCode(purl, body, HEADERS.jd_jxfhb(cookiesList[ckNum]))
+        groupid = getShareCode(purl, body, HEADERS.jd_jxfhb(cookiesList[ckNum]), orderid[1])
         if groupid == 0:
             print(f"===【京东账号】{pinNameList[int(ckNum)]}  获取互助码失败。请稍后再试！==")
             print()

@@ -12,6 +12,7 @@ sys.path.append('../repo/SheYu09_jd_scripts_master/')
 import jdCookie, HEADERS, h5st, posturl
 
 def getShareCode(purl, bodys, header):
+    global aNum
     try:
         url = f'{purl}JoinActive{bodys}&h5st='
         url += h5st.start(url, '10010')

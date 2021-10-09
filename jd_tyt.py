@@ -12,6 +12,7 @@ sys.path.append('../repo/SheYu09_jd_scripts_master/')
 import jdCookie, HEADERS, posturl, h5st
 
 def getShareCode(purl, bodys1, bodys2, header):
+    global aNum
     try:
         body = f'functionId=initiateCoinDozer{bodys1}{bodys2}megatron'
         r = requests.post(url=purl, headers=header, data=body).json()

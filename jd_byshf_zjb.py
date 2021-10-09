@@ -12,6 +12,7 @@ sys.path.append('../repo/SheYu09_jd_scripts_master/')
 import jdCookie, HEADERS, posturl
 
 def getShareCode(purl, bodys1, bodys2, bodys3, header):
+    global aNum
     try:
         body = f'{bodys1}inviteTaskHomePage{bodys2}{bodys3}'
         r = requests.post(url=purl, headers=header, data=body).json()

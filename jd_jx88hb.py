@@ -50,13 +50,15 @@ def helpCode(purl, bodys, header, strPin, uNUm, user):
         url += h5st.start(url, '10010')
         r = requests.get(url=url, headers=header).text
         data = json.loads(r)
-        if data["iRet"] == 0:
+        iRet = data["iRet"]
+        if iRet == 0:
             print('            助力成功🎉')
             print(f'               {data["sErrMsg"]}')
         else:
             print('             助力失败')
             print(f'{data["sErrMsg"]}')
         print()
+        return iRet
     except Exception as e:
         print()
         print("helpCode Error", e)
@@ -86,7 +88,9 @@ def start():
             if i == cookiesList[ckNum]:
                 u += 1
                 continue
-            helpCode(purl, body, HEADERS.jd_jx88hb(i), strUserPin, u+1, pinNameList[u])
+            iRet = helpCode(purl, body, HEADERS.jd_jx88hb(i), strUserPin, u+1, pinNameList[u])
+            if iRet == 2013:
+                break
             time.sleep(0.01)
             u += 1
 

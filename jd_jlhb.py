@@ -15,7 +15,8 @@ def getShareCode(purl, bodys, header):
     global aNum
     try:
         url = f'{purl}h5activityIndex{bodys}'
-        r = requests.post(url=purl, headers=header).json()
+        body = 'body={}'
+        r = requests.post(url=url, headers=header, data=body).json()
         redPacketId = r["data"]["result"]["redpacketInfo"]["id"]
         print(redPacketId)
         return redPacketId
@@ -36,12 +37,13 @@ def helpCode(purl, bodys, header, redPacketId, uNUm, user):
         url = f'{purl}jinli_h5assist{bodys}'
         body = 'body={' + f'"redPacketId":"{redPacketId}"' + '}'
         r = requests.post(url=url, headers=header, data=body).json()
-        print(r)
+        print(r["data"]["result"]["statusDesc"])
         print()
-    except Exception as e:
-        print("helpCode Error", e)
-        print('报错了！')
+        return r["data"]["result"]["status"]
+    except:
+        print("黑号...")
         print()
+        return 0
 
 def start():
     print('          ******* 锦鲤红包-助力 *******')
@@ -65,11 +67,15 @@ def start():
             continue
         u = 0
         for i in cookiesList:
-            code = helpCode(purl, body, HEADERS.jd_jlhb(i), redPacketId, u+1, pinNameList[u])
+            if i == cookiesList[ckNum]:
+                u += 1
+                continue
+            status = helpCode(purl, body, HEADERS.jd_jlhb(i), redPacketId, u+1, pinNameList[u])
             time.sleep(0.1)
+            if status == 2:
+                break
             u += 1
   
 aNum = 0
 if __name__ == '__main__':
     start()
-

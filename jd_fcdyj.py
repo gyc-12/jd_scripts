@@ -12,6 +12,7 @@ sys.path.append('../repo/SheYu09_jd_scripts_master/')
 import jdCookie, HEADERS, posturl, jd_fcdyj_wxtx
 
 def getShareCode(purl, bodys1, bodys2, header):
+    global aNum
     try:
         url = f'{purl}openRedEnvelopeInteract{bodys1}{bodys2}'
         r = requests.get(url=url, headers=header, timeout=30).text

@@ -11,6 +11,20 @@ import requests, time, sys
 sys.path.append('../repo/SheYu09_jd_scripts_master/')
 import jdCookie, HEADERS, posturl
 
+def OpenActivity(purl, bodys, header):
+    try:
+        url = f'{purl}h5launch{bodys}'
+        body = 'body={}'
+        r = requests.post(url=url, headers=header, data=body).json()
+        print(r["data"]["result"]["statusDesc"])
+        print()
+        return r["data"]["result"]["status"]
+    except:
+        print("黑号...")
+        print()
+        return 1
+            
+
 def getShareCode(purl, bodys, header):
     global aNum
     try:
@@ -59,6 +73,9 @@ def start():
         print(f"*******开始【京东账号】{pinNameList[int(ckNum)]} *******")
         print()
         purl, body = posturl.jd_jlhb()
+        status = OpenActivity(purl, body, HEADERS.jd_jlhb(cookiesList[ckNum]))
+        if status == 1:
+            continue
         redPacketId = getShareCode(purl, body, HEADERS.jd_jlhb(cookiesList[ckNum]))
         if redPacketId == 0:
             print(f"===【京东账号】{pinNameList[int(ckNum)]}  获取互助码失败。请稍后再试！==")

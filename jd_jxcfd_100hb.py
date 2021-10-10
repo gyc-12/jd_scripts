@@ -12,18 +12,28 @@ sys.path.append('../repo/SheYu09_jd_scripts_master/')
 import jdCookie, HEADERS, h5st, posturl
 
 def ExchangeState(header):
-    url = 'https://m.jingxi.com/jxbfd/user/ExchangeState?strZone=jxbfd&dwType=2&_stk=dwType,strZone&sceneval=2&h5st='
-    url += h5st.start(url, '10032')
-    r = requests.get(url=url, headers=header).text
-    data = json.loads(r)
-    hongbaopool = data["hongbaopool"]
-    hongbao = data["hongbao"]
-    for i in hongbao:
-        if i["strPrizeName"] == '100元':
-            ddwPaperMoney = i['ddwPaperMoney']
-            dwLvl = i['dwLvl']
-            break
-    return hongbaopool, ddwPaperMoney, dwLvl
+    global aNum
+    try:
+        url = 'https://m.jingxi.com/jxbfd/user/ExchangeState?strZone=jxbfd&dwType=2&_stk=dwType,strZone&sceneval=2&h5st='
+        url += h5st.start(url, '10032')
+        r = requests.get(url=url, headers=header).text
+        data = json.loads(r)
+        hongbaopool = data["hongbaopool"]
+        hongbao = data["hongbao"]
+        for i in hongbao:
+            if i["strPrizeName"] == '100元':
+                ddwPaperMoney = i['ddwPaperMoney']
+                dwLvl = i['dwLvl']
+                break
+        return hongbaopool, ddwPaperMoney, dwLvl
+    except Exception as e:
+        if aNum < 5:
+            aNum += 1
+            return ExchangeState(header)
+        else:
+            aNum = 0
+            print(f'========== 【京东账号】{pinNameList[int(ckNum)]} 已被Jd拉黑 ==========')
+            print()
 
 def ExchangePrize(header, strPoolName, ddwPaperMoney, dwLvl):
     url = f'https://m.jingxi.com/jxbfd/user/ExchangePrize?strZone=jxbfd&dwType=3&dwLvl={dwLvl}&ddwPaperMoney={ddwPaperMoney}&strPoolName={strPoolName}&_stk=ddwPaperMoney,dwLvl,dwType,strPoolName,strZone&sceneval=2&h5st='
@@ -53,5 +63,6 @@ def start():
         hongbaopool, ddwPaperMoney, dwLvl = ExchangeState(HEADERS.jd_jxcfd(cookiesList[ckNum]))
         ExchangePrize(HEADERS.jd_jxcfd(cookiesList[ckNum]), hongbaopool, ddwPaperMoney, dwLvl)
 
+aNum = 0
 if __name__ == '__main__':
     start()

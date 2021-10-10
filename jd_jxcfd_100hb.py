@@ -30,10 +30,11 @@ def ExchangePrize(header, strPoolName, ddwPaperMoney, dwLvl):
     url += h5st.start(url, '10032')
     r = requests.get(url=url, headers=header).text
     data = json.loads(r)
+    print(data)
     if data['iRet'] == 0:
-        print(f'{data["strAwardDetail"]["strName"]}'
+        print(f'{data["strAwardDetail"]["strName"]}')
     else:
-        print(f'{data["sErrMsg"]}'
+        print(f'{data["sErrMsg"]}')
     print()
 
 def start():
@@ -51,3 +52,6 @@ def start():
         print()
         hongbaopool, ddwPaperMoney, dwLvl = ExchangeState(HEADERS.jd_jxcfd(cookiesList[ckNum]))
         ExchangePrize(HEADERS.jd_jxcfd(cookiesList[ckNum]), hongbaopool, ddwPaperMoney, dwLvl)
+
+if __name__ == '__main__':
+    start()

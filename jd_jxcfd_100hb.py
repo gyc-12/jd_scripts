@@ -4,7 +4,7 @@
 项目名称: JD-Script / jd_jxcfd_100hb
 活动名称: 财富岛-100元红包-兑换
 Author: SheYu09
-cron: 0 0 * * * jd_jxcfd.py
+cron: 0 0 * * * jd_jxcfd_100hb.py
 new Env('京喜 -*- 财富岛100元红包')
 '''
 import requests, json, os, sys

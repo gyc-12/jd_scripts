@@ -11,7 +11,7 @@ import requests, json, os, sys
 sys.path.append('../repo/SheYu09_jd_scripts_master/')
 import jdCookie, HEADERS, h5st, posturl
 
-def ExchangeState(header):
+def ExchangeState(header, name):
     global aNum
     try:
         url = 'https://m.jingxi.com/jxbfd/user/ExchangeState?strZone=jxbfd&dwType=2&_stk=dwType,strZone&sceneval=2&h5st='
@@ -29,11 +29,12 @@ def ExchangeState(header):
     except Exception as e:
         if aNum < 5:
             aNum += 1
-            return ExchangeState(header)
+            return ExchangeState(header, name)
         else:
             aNum = 0
-            print(f'========== 【京东账号】{pinNameList[int(ckNum)]} 已被Jd拉黑 ==========')
+            print(f'========== 【京东账号】{name} 已被Jd拉黑 ==========')
             print()
+            return 0, 0, 0
 
 def ExchangePrize(header, strPoolName, ddwPaperMoney, dwLvl):
     url = f'https://m.jingxi.com/jxbfd/user/ExchangePrize?strZone=jxbfd&dwType=3&dwLvl={dwLvl}&ddwPaperMoney={ddwPaperMoney}&strPoolName={strPoolName}&_stk=ddwPaperMoney,dwLvl,dwType,strPoolName,strZone&sceneval=2&h5st='
@@ -60,7 +61,9 @@ def start():
             continue
         print(f"*******开始【京东账号】{pinNameList[int(ckNum)]} *******")
         print()
-        hongbaopool, ddwPaperMoney, dwLvl = ExchangeState(HEADERS.jd_jxcfd(cookiesList[ckNum]))
+        hongbaopool, ddwPaperMoney, dwLvl = ExchangeState(HEADERS.jd_jxcfd(cookiesList[ckNum]), pinNameList[int(ckNum)])
+        if hongbaopool == 0:
+            continue
         ExchangePrize(HEADERS.jd_jxcfd(cookiesList[ckNum]), hongbaopool, ddwPaperMoney, dwLvl)
 
 aNum = 0

@@ -9,7 +9,7 @@ new Env('京喜 -*- 领88元红包')
 '''
 import requests, json, time, sys
 sys.path.append('../repo/SheYu09_jd_scripts_master/')
-import jdCookie, HEADERS, h5st, posturl
+import jdCookie, HEADERS, h5st, posturl, jd_jx88_chb
 
 def getShareCode(purl, bodys, header):
     global aNum
@@ -90,6 +90,7 @@ def start():
                 continue
             iRet = helpCode(purl, body, HEADERS.jd_jx88hb(i), strUserPin, u+1, pinNameList[u])
             if iRet == 2013:
+                # jd_jx88_chb.start()
                 break
             time.sleep(0.01)
             u += 1
